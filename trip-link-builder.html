@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PVD Survey — Trip Link Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F2EB;
+    --warm-white: #FDFAF6;
+    --clay: #C4785A;
+    --clay-light: #E8B49A;
+    --forest: #3B5145;
+    --forest-light: #5A7463;
+    --charcoal: #2C2C2C;
+    --mid: #6B6560;
+    --border: #DDD5C8;
+    --highlight: #F0E8DC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--cream);
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--charcoal);
+    padding: 50px 20px 80px;
+  }
+  .wrapper { max-width: 620px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 40px; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--clay); font-weight: 500; margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 400; color: var(--charcoal);
+    margin-bottom: 10px;
+  }
+  .header p { font-size: 14px; color: var(--mid); line-height: 1.6; }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 36px;
+    box-shadow: 0 2px 16px rgba(44,44,44,0.05);
+    margin-bottom: 20px;
+  }
+
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 20px; color: var(--charcoal);
+  }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--mid); margin-bottom: 7px;
+  }
+
+  input[type="text"], select {
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--charcoal);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  input:focus, select:focus {
+    border-color: var(--clay);
+    box-shadow: 0 0 0 3px rgba(196,120,90,0.12);
+    background: var(--warm-white);
+  }
+
+  /* Restaurant rows */
+  .restaurant-row {
+    display: grid;
+    grid-template-columns: 1fr 110px 28px;
+    gap: 8px;
+    align-items: end;
+    margin-bottom: 10px;
+  }
+  .restaurant-row .field { margin: 0; }
+  .remove-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--mid); font-size: 18px; padding: 0 0 2px;
+    line-height: 1; transition: color 0.15s;
+  }
+  .remove-btn:hover { color: #b94a38; }
+
+  .add-btn {
+    background: none;
+    border: 1.5px dashed var(--clay-light);
+    border-radius: 10px;
+    color: var(--clay);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    padding: 9px 16px;
+    cursor: pointer; width: 100%;
+    transition: all 0.2s; margin-top: 4px;
+  }
+  .add-btn:hover { background: rgba(196,120,90,0.06); border-color: var(--clay); }
+
+  /* Output */
+  .output-card {
+    background: var(--forest);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: none;
+  }
+  .output-card.visible { display: block; }
+  .output-card p {
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 500;
+  }
+  .link-box {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px; color: #fff;
+    word-break: break-all;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    font-family: 'DM Mono', monospace, sans-serif;
+  }
+  .copy-btn {
+    background: #fff;
+    color: var(--forest);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .copy-btn:hover { background: var(--cream); transform: translateY(-1px); }
+  .copy-confirm {
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    margin-top: 10px; display: none;
+  }
+
+  .generate-btn {
+    background: var(--clay);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 14px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500;
+    cursor: pointer; width: 100%;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 14px rgba(196,120,90,0.3);
+    margin-top: 8px;
+  }
+  .generate-btn:hover { background: #b56a4e; transform: translateY(-1px); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%236B6560' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 34px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <p class="eyebrow">For Kat · Internal Tool</p>
+    <h1>Trip Link Builder</h1>
+    <p>Fill in what you know about the trip and get a pre-filled survey link to send to attendees.</p>
+  </div>
+
+  <div class="card">
+    <h2>Trip Details</h2>
+
+    <div class="field">
+      <label>Team Name</label>
+      <input type="text" id="team" placeholder="e.g. Platform, Delivery, DC Crew…">
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+      <div class="field">
+        <label>Visit Dates</label>
+        <input type="text" id="dates" placeholder="e.g. May 12–15, 2025">
+      </div>
+      <div class="field">
+        <label>Purpose of Visit</label>
+        <select id="purpose">
+          <option value="">— select —</option>
+          <option>Team offsite</option>
+          <option>Workshop</option>
+          <option>Client onboarding</option>
+          <option>Training session</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Where They Stayed</h2>
+    <div class="field">
+      <label>Hotel Name</label>
+      <input type="text" id="hotel" placeholder="e.g. Beatrice Hotel, Graduate Providence…">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Group Meals</h2>
+    <p style="font-size:13px; color:var(--mid); margin-bottom:16px; line-height:1.5;">Add the restaurants you know they went to as a group. These will appear pre-filled so respondents can jump straight to rating them.</p>
+
+    <div id="restaurant-list"></div>
+    <button class="add-btn" onclick="addRestaurant()">+ Add restaurant</button>
+  </div>
+
+  <div class="card">
+    <h2>Activities & Outings</h2>
+    <p style="font-size:13px; color:var(--mid); margin-bottom:16px; line-height:1.5;">Add any group activities you know they did — these will pre-fill so respondents can react to them directly.</p>
+
+    <div id="activity-list"></div>
+    <button class="add-btn" onclick="addActivity()">+ Add activity</button>
+  </div>
+
+  <button class="generate-btn" onclick="generateLink()">Generate Survey Link →</button>
+
+  <div style="height:20px;"></div>
+
+  <div class="output-card" id="output">
+    <p>Your pre-filled survey link</p>
+    <div class="link-box" id="link-display"></div>
+    <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+    <div class="copy-confirm" id="copy-confirm">✓ Copied to clipboard</div>
+  </div>
+
+</div>
+
+<script>
+  const SURVEY_URL = 'providence-feedback-form.html';
+
+  const mealOptions = ['Breakfast','Lunch','Dinner','Coffee/snack','Other'];
+
+  function mealSelect(val='') {
+    return `<select class="rest-meal">${mealOptions.map(m =>
+      `<option${m===val?' selected':''}>${m}</option>`
+    ).join('')}</select>`;
+  }
+
+  let restCount = 0;
+  function addRestaurant(name='', meal='Dinner') {
+    restCount++;
+    const id = `rest-${restCount}`;
+    const row = document.createElement('div');
+    row.className = 'restaurant-row';
+    row.id = id;
+    row.innerHTML = `
+      <div class="field">
+        <label>Restaurant</label>
+        <input type="text" class="rest-name" placeholder="Name of place…" value="${name}">
+      </div>
+      <div class="field">
+        <label>Meal</label>
+        ${mealSelect(meal)}
+      </div>
+      <button class="remove-btn" onclick="removeRestaurant('${id}')" title="Remove">×</button>`;
+    document.getElementById('restaurant-list').appendChild(row);
+  }
+
+  function removeRestaurant(id) {
+    document.getElementById(id)?.remove();
+  }
+
+  let actCount = 0;
+  function addActivity(name='') {
+    actCount++;
+    const id = `act-${actCount}`;
+    const row = document.createElement('div');
+    row.className = 'restaurant-row';
+    row.id = id;
+    row.style.gridTemplateColumns = '1fr 28px';
+    row.innerHTML = `
+      <div class="field">
+        <label>Activity</label>
+        <input type="text" class="act-name" placeholder="e.g. WaterFire, Federal Hill walk, escape room…" value="${name}">
+      </div>
+      <button class="remove-btn" onclick="removeActivity('${id}')" title="Remove">×</button>`;
+    document.getElementById('activity-list').appendChild(row);
+  }
+
+  function removeActivity(id) {
+    document.getElementById(id)?.remove();
+  }
+
+  function generateLink() {
+    const params = new URLSearchParams();
+
+    const team = document.getElementById('team').value.trim();
+    const dates = document.getElementById('dates').value.trim();
+    const purpose = document.getElementById('purpose').value;
+    const hotel = document.getElementById('hotel').value.trim();
+
+    if (team) params.set('team', team);
+    if (dates) params.set('dates', dates);
+    if (purpose) params.set('purpose', purpose);
+    if (hotel) params.set('hotel', hotel);
+
+    const names = [...document.querySelectorAll('.rest-name')].map(i => i.value.trim());
+    const meals = [...document.querySelectorAll('.rest-meal')].map(s => s.value);
+
+    names.forEach((n, i) => {
+      if (n) {
+        params.set(`r${i+1}`, n);
+        params.set(`r${i+1}meal`, meals[i]);
+      }
+    });
+
+    const actNames = [...document.querySelectorAll('.act-name')].map(i => i.value.trim());
+    actNames.forEach((n, i) => { if (n) params.set(`a${i+1}`, n); });
+
+    const url = `${SURVEY_URL}?${params.toString()}`;
+    document.getElementById('link-display').textContent = url;
+    const out = document.getElementById('output');
+    out.classList.add('visible');
+    out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.getElementById('copy-confirm').style.display = 'none';
+  }
+
+  function copyLink() {
+    const text = document.getElementById('link-display').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const c = document.getElementById('copy-confirm');
+      c.style.display = 'block';
+      setTimeout(() => c.style.display = 'none', 2500);
+    });
+  }
+
+  // Start with two restaurant rows
+  addRestaurant();
+  addRestaurant();
+</script>
+</body>
+</html>

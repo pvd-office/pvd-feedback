@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Providence Office — Visit Feedback</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F2EB;
+    --warm-white: #FDFAF6;
+    --clay: #C4785A;
+    --clay-light: #E8B49A;
+    --forest: #3B5145;
+    --forest-light: #5A7463;
+    --charcoal: #2C2C2C;
+    --mid: #6B6560;
+    --border: #DDD5C8;
+    --section-bg: #FFFFFF;
+    --highlight: #F0E8DC;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--cream);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(196,120,90,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(59,81,69,0.07) 0%, transparent 50%);
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--charcoal);
+    padding: 60px 20px 80px;
+  }
+
+  .wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .header h1 em {
+    color: var(--clay);
+    font-style: italic;
+  }
+
+  .header p {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--clay);
+    margin: 24px auto 0;
+    border-radius: 2px;
+  }
+
+  /* SECTION CARDS */
+  .section {
+    background: var(--section-bg);
+    border-radius: 16px;
+    padding: 36px 40px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 16px rgba(44,44,44,0.05);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .section:nth-child(2) { animation-delay: 0.08s; }
+  .section:nth-child(3) { animation-delay: 0.14s; }
+  .section:nth-child(4) { animation-delay: 0.20s; }
+  .section:nth-child(5) { animation-delay: 0.26s; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .icon-clay { background: rgba(196,120,90,0.12); }
+  .icon-forest { background: rgba(59,81,69,0.10); }
+  .icon-gold { background: rgba(180,150,90,0.12); }
+  .icon-blue { background: rgba(80,110,150,0.10); }
+
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1.2;
+  }
+
+  .section-label p {
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 2px;
+    font-weight: 300;
+  }
+
+  /* INTRO ROW (name, date, etc.) */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .intro-grid .full { grid-column: 1 / -1; }
+
+  /* FORM ELEMENTS */
+  .field {
+    margin-bottom: 22px;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--charcoal);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--clay);
+    box-shadow: 0 0 0 3px rgba(196,120,90,0.12);
+    background: var(--warm-white);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.6;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%236B6560' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+    cursor: pointer;
+  }
+
+  /* STAR RATING */
+  .star-group {
+    margin-bottom: 22px;
+  }
+
+  .star-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .stars {
+    display: flex;
+    gap: 6px;
+  }
+
+  .stars input { display: none; }
+
+  .stars label {
+    font-size: 26px;
+    cursor: pointer;
+    color: var(--border);
+    transition: color 0.15s, transform 0.1s;
+    text-transform: none;
+    letter-spacing: 0;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .stars:hover label { color: var(--clay-light); }
+  .stars label:hover,
+  .stars label:hover ~ label { color: var(--border) !important; }
+  .stars:hover label:hover { color: var(--clay) !important; }
+  .stars input:checked ~ label { color: var(--border); }
+  .stars input:checked + label,
+  .stars input:checked ~ input:checked + label { color: var(--clay); }
+
+  /* Reverse star trick */
+  .stars {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+  .stars:hover label { color: var(--clay) !important; }
+  .stars label:hover ~ label { color: var(--clay) !important; }
+  .stars label:hover { color: var(--clay) !important; }
+  .stars input:checked ~ label { color: var(--clay); }
+  .stars input:checked + label { color: var(--clay); }
+
+  /* VIBE CHECKBOXES */
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 13px;
+    color: var(--charcoal);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    margin: 0;
+    user-select: none;
+  }
+
+  .check-item:hover {
+    border-color: var(--clay-light);
+    background: rgba(196,120,90,0.04);
+  }
+
+  .check-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    accent-color: var(--clay);
+    cursor: pointer;
+  }
+
+  .check-item.forest:hover { border-color: var(--forest-light); background: rgba(59,81,69,0.04); }
+  .check-item.forest input { accent-color: var(--forest); }
+
+  /* SCALE RATING */
+  .scale-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 6px;
+  }
+
+  .scale-ends {
+    font-size: 11px;
+    color: var(--mid);
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  .scale-buttons {
+    display: flex;
+    gap: 5px;
+    flex: 1;
+  }
+
+  .scale-btn {
+    flex: 1;
+    padding: 9px 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .scale-btn:hover { border-color: var(--clay); color: var(--clay); background: rgba(196,120,90,0.06); }
+  .scale-btn.active { background: var(--clay); border-color: var(--clay); color: #fff; }
+
+  /* FOOD ENTRIES */
+  .food-entry {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px;
+    align-items: end;
+    margin-bottom: 12px;
+    padding: 14px;
+    background: var(--highlight);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .food-entry .field { margin: 0; }
+
+  .food-rating-inline {
+    display: flex;
+    gap: 3px;
+  }
+
+  .mini-star {
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--border);
+    transition: color 0.1s;
+  }
+
+  .mini-star.lit { color: var(--clay); }
+
+  .add-btn {
+    background: none;
+    border: 1.5px dashed var(--clay-light);
+    border-radius: 10px;
+    color: var(--clay);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 16px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+
+  .add-btn:hover { background: rgba(196,120,90,0.06); border-color: var(--clay); }
+
+  /* SUBMIT */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 36px;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .submit-btn {
+    background: var(--forest);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 16px 52px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(59,81,69,0.25);
+  }
+
+  .submit-btn:hover {
+    background: var(--forest-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59,81,69,0.3);
+  }
+
+  .submit-note {
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 14px;
+    font-weight: 300;
+  }
+
+  /* HR */
+  .form-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 560px) {
+    .section { padding: 28px 22px; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .checkbox-grid { grid-template-columns: 1fr; }
+    .food-entry { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- PRE-FILL BANNER (shown only when params present) -->
+  <div id="prefill-banner" style="display:none; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--border); border-left:4px solid var(--clay); border-radius:12px; padding:14px 18px; margin-bottom:28px; font-size:13px; color:var(--mid); line-height:1.5;">
+    <span style="font-size:18px;">✨</span>
+    <span>Some fields have been pre-filled based on your trip — review them and fill in the rest.</span>
+  </div>
+
+  <!-- HEADER IMAGE -->
+  <div style="margin-bottom: 32px; margin-left: -20px; margin-right: -20px;">
+    <img src="Header_PVD.png" alt="Providence skyline" style="width: 100%; display: block;">
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <p class="eyebrow">Rise8 Providence · 56 Pine St, 7th Floor</p>
+    <h1>How was your<br>time <em>here</em>?</h1>
+    <p>Your honest feedback helps us make the Providence office the kind of place people genuinely want to work from — and come back to.</p>
+    <div class="divider"></div>
+  </div>
+
+  <!-- SECTION 0: BASICS -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-icon icon-clay">👤</div>
+      <div>
+        <h2>About Your Visit</h2>
+        <p>Just a few quick details to start</p>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="field">
+        <label>Your Name</label>
+        <input type="text" id="f-name" placeholder="First and last name">
+      </div>
+      <div class="field">
+        <label>Your Team Name</label>
+        <input type="text" id="prefill-team" placeholder="e.g. Platform, Delivery…">
+      </div>
+      <div class="field">
+        <label>Visit Dates</label>
+        <input type="text" id="prefill-dates" placeholder="e.g. May 12–15, 2025">
+      </div>
+      <div class="field">
+        <label>Purpose of Visit</label>
+        <select id="prefill-purpose">
+          <option value="" disabled selected>Select one…</option>
+          <option>Team offsite</option>
+          <option>Workshop</option>
+          <option>Client onboarding</option>
+          <option>Training session</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field full">
+        <label>Group Size (approx.)</label>
+        <select id="f-groupsize">
+          <option value="" disabled selected>How many people?</option>
+          <option>Just me (1)</option>
+          <option>2–4</option>
+          <option>5–10</option>
+          <option>11–20</option>
+          <option>20+</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: THE OFFICE -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-icon icon-clay">🏠</div>
+      <div>
+        <h2>The Office Experience</h2>
+        <p>How the space felt — comfort, vibe, and creative energy</p>
+      </div>
+    </div>
+
+    <div class="star-group">
+      <span class="star-label">Overall office experience</span>
+      <div class="stars" id="stars-overall">
+        <input type="radio" name="stars-overall" id="s5" value="5"><label for="s5" title="5">★</label>
+        <input type="radio" name="stars-overall" id="s4" value="4"><label for="s4" title="4">★</label>
+        <input type="radio" name="stars-overall" id="s3" value="3"><label for="s3" title="3">★</label>
+        <input type="radio" name="stars-overall" id="s2" value="2"><label for="s2" title="2">★</label>
+        <input type="radio" name="stars-overall" id="s1" value="1"><label for="s1" title="1">★</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>What landed — what made the office feel great?</label>
+      <textarea id="f-office-highlights" placeholder="Lighting, layout, seating, the coffee setup, the view, a quiet corner that worked perfectly — anything that stood out in a good way…"></textarea>
+    </div>
+
+    <div class="field">
+      <label>What could use improvement?</label>
+      <textarea id="f-office-improvements" placeholder="Anything that felt off, missing, or could be better — temperature, noise, storage, tech setup, furniture, office snacks…"></textarea>
+    </div>
+
+    <hr class="form-divider">
+
+    <p class="star-label" style="margin-bottom:14px;">How well did the space support each of these goals?</p>
+
+    <div class="field">
+      <label>Felt comfortable and like home base</label>
+      <div class="scale-row">
+        <span class="scale-ends">Not at all</span>
+        <div class="scale-buttons" id="scale-comfort"></div>
+        <span class="scale-ends">Very much</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Sparked collaboration and teamwork</label>
+      <div class="scale-row">
+        <span class="scale-ends">Not at all</span>
+        <div class="scale-buttons" id="scale-collab"></div>
+        <span class="scale-ends">Very much</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Inspired creative / outside-the-box thinking</label>
+      <div class="scale-row">
+        <span class="scale-ends">Not at all</span>
+        <div class="scale-buttons" id="scale-creative"></div>
+        <span class="scale-ends">Very much</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Made you feel productive as a team</label>
+      <div class="scale-row">
+        <span class="scale-ends">Not at all</span>
+        <div class="scale-buttons" id="scale-productive"></div>
+        <span class="scale-ends">Very much</span>
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <div class="field">
+      <label>Which vibes rang true? (check all that apply)</label>
+      <div class="checkbox-grid" id="vibes-grid" style="margin-top:6px;">
+        <label class="check-item"><input type="checkbox" value="Welcoming & warm"> Welcoming & warm</label>
+        <label class="check-item"><input type="checkbox" value="Energizing"> Energizing</label>
+        <label class="check-item"><input type="checkbox" value="Calm & focused"> Calm & focused</label>
+        <label class="check-item"><input type="checkbox" value="Creative & inspiring"> Creative & inspiring</label>
+        <label class="check-item"><input type="checkbox" value="Professional"> Professional</label>
+        <label class="check-item"><input type="checkbox" value="Playful"> Playful</label>
+        <label class="check-item"><input type="checkbox" value="Cluttered or chaotic"> Cluttered or chaotic</label>
+        <label class="check-item"><input type="checkbox" value="Sterile or corporate"> Sterile or corporate</label>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:22px;">
+      <label>Anything you wished the office had?</label>
+      <textarea id="f-office-wishlist" placeholder="Equipment, supplies, a certain type of space, a whiteboard in a different spot — whatever was missing for you…" style="min-height:72px;"></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 2: LOGISTICS -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-icon icon-gold">🗺️</div>
+      <div>
+        <h2>Trip Logistics</h2>
+        <p>Food, hotel, activities, and getting around</p>
+      </div>
+    </div>
+
+    <!-- FOOD -->
+    <p class="star-label" style="margin-bottom:12px;">Restaurants & food</p>
+
+    <div id="food-list"></div>
+    <button class="add-btn" onclick="addFoodEntry()">+ Add another restaurant</button>
+
+    <div class="field" style="margin-top:22px;">
+      <label>Food highlights — anything we should put on the office rec list?</label>
+      <textarea id="f-food-highlights" placeholder="Any spots that really delivered? Or that you'd skip next time?" style="min-height:72px;"></textarea>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- HOTEL -->
+    <p class="star-label" style="margin-bottom:12px;">Hotel & accommodations</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="field">
+        <label>Hotel name</label>
+        <input type="text" id="prefill-hotel" placeholder="Where did you stay?">
+      </div>
+      <div class="star-group" style="margin:0;">
+        <span class="star-label">Hotel rating</span>
+        <div class="stars" id="stars-hotel">
+          <input type="radio" name="stars-hotel" id="h5" value="5"><label for="h5">★</label>
+          <input type="radio" name="stars-hotel" id="h4" value="4"><label for="h4">★</label>
+          <input type="radio" name="stars-hotel" id="h3" value="3"><label for="h3">★</label>
+          <input type="radio" name="stars-hotel" id="h2" value="2"><label for="h2">★</label>
+          <input type="radio" name="stars-hotel" id="h1" value="1"><label for="h1">★</label>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Hotel notes — what worked, what didn't?</label>
+      <textarea id="f-hotel-notes" placeholder="Location, comfort, value, anything worth noting for the next group…" style="min-height:72px;"></textarea>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- ACTIVITIES -->
+    <p class="star-label" style="margin-bottom:12px;">Activities & outings</p>
+    <div class="field">
+      <label>What activities or outings did your group do?</label>
+      <textarea id="f-activities" placeholder="Team dinners, walks, touristy things, evening hangouts — anything outside the office…" style="min-height:72px;"></textarea>
+    </div>
+    <div class="field">
+      <label>Activity highlights or recommendations?</label>
+      <textarea id="f-activity-highlights" placeholder="Anything worth repeating — or anything to skip?" style="min-height:72px;"></textarea>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- GETTING AROUND -->
+    <div class="field">
+      <label>How easy was it to get around Providence?</label>
+      <div class="scale-row">
+        <span class="scale-ends">Frustrating</span>
+        <div class="scale-buttons" id="scale-transit"></div>
+        <span class="scale-ends">Seamless</span>
+      </div>
+    </div>
+    <div class="field" style="margin-top:16px;">
+      <label>Getting around — any notes? (parking, rideshare, walking, etc.)</label>
+      <textarea id="f-transit-notes" placeholder="Anything that would help the next group navigate the city…" style="min-height:64px;"></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 3: PROGRAMMING -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-icon icon-forest">📋</div>
+      <div>
+        <h2>The Programming</h2>
+        <p>Sessions, workshops, or agenda — separate from the space itself</p>
+      </div>
+    </div>
+
+    <div class="star-group">
+      <span class="star-label">Overall programming quality</span>
+      <div class="stars" id="stars-program">
+        <input type="radio" name="stars-program" id="p5" value="5"><label for="p5">★</label>
+        <input type="radio" name="stars-program" id="p4" value="4"><label for="p4">★</label>
+        <input type="radio" name="stars-program" id="p3" value="3"><label for="p3">★</label>
+        <input type="radio" name="stars-program" id="p2" value="2"><label for="p2">★</label>
+        <input type="radio" name="stars-program" id="p1" value="1"><label for="p1">★</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>What sessions or moments were most valuable?</label>
+      <textarea id="f-program-highlights" placeholder="Name the ones that clicked — and what made them work…"></textarea>
+    </div>
+
+    <div class="field">
+      <label>What fell flat or could be cut / rethought?</label>
+      <textarea id="f-program-flat" placeholder="Honest feedback only helps. What didn't land, ran too long, or felt off-purpose?"></textarea>
+    </div>
+
+    <div class="field">
+      <label>How well did the agenda match your team's actual goals?</label>
+      <div class="scale-row">
+        <span class="scale-ends">Total mismatch</span>
+        <div class="scale-buttons" id="scale-agenda"></div>
+        <span class="scale-ends">Spot on</span>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:22px;">
+      <label>What topics or sessions do you wish had been included?</label>
+      <textarea id="f-program-wishlist" placeholder="If you could add one thing to the agenda, what would it be?" style="min-height:72px;"></textarea>
+    </div>
+
+    <hr class="form-divider">
+
+    <div class="field">
+      <label>Any other programming feedback?</label>
+      <textarea id="f-program-other" placeholder="Format, pacing, facilitation, anything else on your mind…" style="min-height:72px;"></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 4: FINAL THOUGHTS -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-icon icon-blue">💬</div>
+      <div>
+        <h2>Final Thoughts</h2>
+        <p>The things that don't fit neatly into a form</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Would you want to come back to the Providence office?</label>
+      <select id="f-would-return">
+        <option value="" disabled selected>Choose…</option>
+        <option>Absolutely — sign me up</option>
+        <option>Yes, with a few changes</option>
+        <option>Neutral / depends on the trip</option>
+        <option>Probably not</option>
+        <option>Definitely not</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>One thing you'd tell the next team coming to PVD</label>
+      <textarea id="f-tip" placeholder="Insider tip, honest warning, thing you wish you knew before arriving…" style="min-height:80px;"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Anything else on your mind?</label>
+      <textarea id="f-anything-else" placeholder="Open floor — this is your space…" style="min-height:80px;"></textarea>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit Feedback →</button>
+    <p class="submit-note" id="submit-note">Takes about 5–8 minutes total · Responses go directly to Kat</p>
+    <div id="submit-success" style="display:none; background:#fff; border:1.5px solid var(--border); border-left:4px solid var(--forest); border-radius:12px; padding:18px 24px; margin-top:20px; text-align:left;">
+      <p style="font-weight:500; color:var(--forest); margin-bottom:6px;">✓ Feedback received — thank you!</p>
+      <p style="font-size:13px; color:var(--mid); line-height:1.6;">Your response has been logged. We'll use it to keep making the Providence office better for every team that comes through.</p>
+    </div>
+    <div id="submit-error" style="display:none; background:#fff; border:1.5px solid #e0b0a0; border-left:4px solid #b94a38; border-radius:12px; padding:18px 24px; margin-top:20px; text-align:left;">
+      <p style="font-weight:500; color:#b94a38; margin-bottom:6px;">Something went wrong</p>
+      <p style="font-size:13px; color:var(--mid); line-height:1.6;">Your response couldn't be submitted. Please try again or email Kat directly at <a href="mailto:pvd@rise8.us" style="color:var(--clay);">pvd@rise8.us</a>.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Scale button init
+  function buildScale(id) {
+    const container = document.getElementById(id);
+    if (!container) return;
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'scale-btn';
+      btn.textContent = i;
+      btn.dataset.val = i;
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+      container.appendChild(btn);
+    }
+  }
+
+  ['scale-comfort','scale-collab','scale-creative','scale-productive','scale-transit','scale-agenda'].forEach(buildScale);
+
+  // Mini star rating for food
+  function rateFood(star, val) {
+    const row = star.parentElement;
+    const stars = row.querySelectorAll('.mini-star');
+    stars.forEach((s, i) => s.classList.toggle('lit', i < val));
+  }
+
+  // Build and add a food entry (optionally pre-filled)
+  function makeFoodEntry(name='', meal='Dinner') {
+    const meals = ['Breakfast','Lunch','Dinner','Coffee/snack','Other'];
+    const entry = document.createElement('div');
+    entry.className = 'food-entry';
+    entry.innerHTML = `
+      <div class="field">
+        <label>Restaurant or spot</label>
+        <input type="text" placeholder="Name of place…" value="${name}">
+      </div>
+      <div class="field" style="min-width:90px;">
+        <label>Meal</label>
+        <select>${meals.map(m => `<option${m===meal?' selected':''}>${m}</option>`).join('')}</select>
+      </div>
+      <div class="field">
+        <label>Rating</label>
+        <div class="food-rating-inline">
+          <span class="mini-star" onclick="rateFood(this,1)">★</span>
+          <span class="mini-star" onclick="rateFood(this,2)">★</span>
+          <span class="mini-star" onclick="rateFood(this,3)">★</span>
+          <span class="mini-star" onclick="rateFood(this,4)">★</span>
+          <span class="mini-star" onclick="rateFood(this,5)">★</span>
+        </div>
+      </div>`;
+    return entry;
+  }
+
+  function addFoodEntry(name='', meal='Dinner') {
+    document.getElementById('food-list').appendChild(makeFoodEntry(name, meal));
+  }
+
+  // ── SUBMIT ──
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxwJ85kmjrhe0vXmXzGr3J85KGc65IoOP6BfRL0vGzXrMeLk4Kk25dJ81VIb34dd_Y/exec';
+
+  function getScale(id) {
+    const active = document.querySelector(`#${id} .scale-btn.active`);
+    return active ? active.dataset.val : '';
+  }
+
+  function getStars(name) {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    return checked ? checked.value : '';
+  }
+
+  function getRestaurants() {
+    return [...document.querySelectorAll('#food-list .food-entry')].map(entry => {
+      const name = entry.querySelector('input[type="text"]')?.value?.trim() || '';
+      const meal = entry.querySelector('select')?.value || '';
+      const stars = [...entry.querySelectorAll('.mini-star')].filter(s => s.classList.contains('lit')).length;
+      return name ? `${name} | ${meal} | ${'★'.repeat(stars) || '—'}` : null;
+    }).filter(Boolean);
+  }
+
+  function getVibes() {
+    return [...document.querySelectorAll('#vibes-grid input[type="checkbox"]:checked')].map(c => c.value);
+  }
+
+  async function submitForm() {
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+
+    const payload = {
+      submittedAt:       new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+      respondentName:    document.getElementById('f-name')?.value?.trim(),
+      teamName:          document.getElementById('prefill-team')?.value?.trim(),
+      visitDates:        document.getElementById('prefill-dates')?.value?.trim(),
+      visitPurpose:      document.getElementById('prefill-purpose')?.value,
+      groupSize:         document.getElementById('f-groupsize')?.value,
+
+      officeStars:       getStars('stars-overall'),
+      officeHighlights:  document.getElementById('f-office-highlights')?.value?.trim(),
+      officeImprovements:document.getElementById('f-office-improvements')?.value?.trim(),
+      scaleComfort:      getScale('scale-comfort'),
+      scaleCollab:       getScale('scale-collab'),
+      scaleCreative:     getScale('scale-creative'),
+      scaleProductive:   getScale('scale-productive'),
+      vibesChecked:      getVibes(),
+      officeWishList:    document.getElementById('f-office-wishlist')?.value?.trim(),
+
+      restaurants:       getRestaurants(),
+      foodHighlights:    document.getElementById('f-food-highlights')?.value?.trim(),
+      hotelName:         document.getElementById('prefill-hotel')?.value?.trim(),
+      hotelStars:        getStars('stars-hotel'),
+      hotelNotes:        document.getElementById('f-hotel-notes')?.value?.trim(),
+      activitiesDone:    document.getElementById('f-activities')?.value?.trim(),
+      activityHighlights:document.getElementById('f-activity-highlights')?.value?.trim(),
+      scaleTransit:      getScale('scale-transit'),
+      transitNotes:      document.getElementById('f-transit-notes')?.value?.trim(),
+
+      programStars:      getStars('stars-program'),
+      programHighlights: document.getElementById('f-program-highlights')?.value?.trim(),
+      programFlatSpots:  document.getElementById('f-program-flat')?.value?.trim(),
+      scaleAgenda:       getScale('scale-agenda'),
+      programWishList:   document.getElementById('f-program-wishlist')?.value?.trim(),
+      programOther:      document.getElementById('f-program-other')?.value?.trim(),
+
+      wouldReturn:       document.getElementById('f-would-return')?.value,
+      tipForNextTeam:    document.getElementById('f-tip')?.value?.trim(),
+      anythingElse:      document.getElementById('f-anything-else')?.value?.trim(),
+    };
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      // no-cors means we can't read the response — assume success
+      document.getElementById('submit-btn').style.display = 'none';
+      document.getElementById('submit-note').style.display = 'none';
+      document.getElementById('submit-success').style.display = 'block';
+    } catch (err) {
+      btn.textContent = 'Submit Feedback →';
+      btn.disabled = false;
+      document.getElementById('submit-error').style.display = 'block';
+    }
+  }
+
+
+  (function prefillFromParams() {
+    const p = new URLSearchParams(window.location.search);
+
+    // Always ensure at least one blank row first
+    if (![...p.keys()].length) { addFoodEntry(); return; }
+
+    const setVal = (id, val) => { if (val) { const el = document.getElementById(id); if (el) el.value = val; } };
+    const setSelect = (id, val) => {
+      if (!val) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      [...el.options].forEach(o => { if (o.text === val || o.value === val) o.selected = true; });
+    };
+
+    setVal('prefill-team', p.get('team'));
+    setVal('prefill-dates', p.get('dates'));
+    setSelect('prefill-purpose', p.get('purpose'));
+    setVal('prefill-hotel', p.get('hotel'));
+
+    // Restaurants
+    let i = 1;
+    const hasRestaurants = !!p.get('r1');
+    if (hasRestaurants) document.getElementById('food-list').innerHTML = '';
+    while (p.get(`r${i}`)) {
+      addFoodEntry(p.get(`r${i}`), p.get(`r${i}meal`) || 'Dinner');
+      i++;
+    }
+    if (!document.getElementById('food-list').children.length) addFoodEntry();
+
+    // Activities
+    const acts = [];
+    let j = 1;
+    while (p.get(`a${j}`)) { acts.push(p.get(`a${j}`)); j++; }
+    if (acts.length) {
+      const el = document.getElementById('f-activities');
+      if (el) el.value = acts.join('\n');
+    }
+
+    // Show confirmation banner
+    const banner = document.getElementById('prefill-banner');
+    if (banner) banner.style.display = 'flex';
+  })();
+</script>
+</body>
+</html>
