@@ -680,58 +680,6 @@
     </div>
   </div>
 
-  <!-- SECTION 3: PROGRAMMING -->
-  <div class="section">
-    <div class="section-label">
-      <div class="section-icon icon-forest">📋</div>
-      <div>
-        <h2>The Programming</h2>
-        <p>Sessions, workshops, or agenda — separate from the space itself</p>
-      </div>
-    </div>
-
-    <div class="star-group">
-      <span class="star-label">Overall programming quality</span>
-      <div class="stars" id="stars-program">
-        <input type="radio" name="stars-program" id="p5" value="5"><label for="p5">★</label>
-        <input type="radio" name="stars-program" id="p4" value="4"><label for="p4">★</label>
-        <input type="radio" name="stars-program" id="p3" value="3"><label for="p3">★</label>
-        <input type="radio" name="stars-program" id="p2" value="2"><label for="p2">★</label>
-        <input type="radio" name="stars-program" id="p1" value="1"><label for="p1">★</label>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>What sessions or moments were most valuable?</label>
-      <textarea id="f-program-highlights" placeholder="Name the ones that clicked — and what made them work…"></textarea>
-    </div>
-
-    <div class="field">
-      <label>What fell flat or could be cut / rethought?</label>
-      <textarea id="f-program-flat" placeholder="Honest feedback only helps. What didn't land, ran too long, or felt off-purpose?"></textarea>
-    </div>
-
-    <div class="field">
-      <label>How well did the agenda match your team's actual goals?</label>
-      <div class="scale-row">
-        <span class="scale-ends">Total mismatch</span>
-        <div class="scale-buttons" id="scale-agenda"></div>
-        <span class="scale-ends">Spot on</span>
-      </div>
-    </div>
-
-    <div class="field" style="margin-top:22px;">
-      <label>What topics or sessions do you wish had been included?</label>
-      <textarea id="f-program-wishlist" placeholder="If you could add one thing to the agenda, what would it be?" style="min-height:72px;"></textarea>
-    </div>
-
-    <hr class="form-divider">
-
-    <div class="field">
-      <label>Any other programming feedback?</label>
-      <textarea id="f-program-other" placeholder="Format, pacing, facilitation, anything else on your mind…" style="min-height:72px;"></textarea>
-    </div>
-  </div>
 
   <!-- SECTION 4: FINAL THOUGHTS -->
   <div class="section">
@@ -801,7 +749,7 @@
     }
   }
 
-  ['scale-comfort','scale-collab','scale-creative','scale-productive','scale-transit','scale-agenda'].forEach(buildScale);
+  ['scale-comfort','scale-collab','scale-creative','scale-productive','scale-transit'].forEach(buildScale);
 
   // Mini star rating for food
   function rateFood(star, val) {
@@ -899,13 +847,6 @@
       activityHighlights:document.getElementById('f-activity-highlights')?.value?.trim(),
       scaleTransit:      getScale('scale-transit'),
       transitNotes:      document.getElementById('f-transit-notes')?.value?.trim(),
-
-      programStars:      getStars('stars-program'),
-      programHighlights: document.getElementById('f-program-highlights')?.value?.trim(),
-      programFlatSpots:  document.getElementById('f-program-flat')?.value?.trim(),
-      scaleAgenda:       getScale('scale-agenda'),
-      programWishList:   document.getElementById('f-program-wishlist')?.value?.trim(),
-      programOther:      document.getElementById('f-program-other')?.value?.trim(),
 
       wouldReturn:       document.getElementById('f-would-return')?.value,
       tipForNextTeam:    document.getElementById('f-tip')?.value?.trim(),
